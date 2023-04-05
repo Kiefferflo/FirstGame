@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using PlayFab;
+using PlayFab.ClientModels;
 
 [System.Serializable]
 public class TitleNewsViewEntry
@@ -53,16 +55,19 @@ public class TitleNewsView : MonoBehaviour
         // Trigger news show if logged in
         if (PlayfabAuth.IsLoggedIn == true)
         {
-            // TODO: Request playfab to retrieve the latest news
-            this.OnGetTitleNewsSuccess();       // Fake
+            PlayFabClientAPI.GetTitleNews(new GetTitleNewsRequest(), 
+                result => {
+                    this.OnGetTitleNewsSuccess(result.News);
+                }, 
+                error => {
+                    this.OnGetTitleNewsError();
+                }
+            );
         }
     }
 
-    private void OnGetTitleNewsSuccess()
+    private void OnGetTitleNewsSuccess(List<TitleNewsItem> news)
     {
-        // Fill data of the list
-        List<TitleNewsViewEntry> news = new List<TitleNewsViewEntry>();
-
         // News found
         if (news != null && news.Count > 0)
         {
@@ -76,9 +81,9 @@ public class TitleNewsView : MonoBehaviour
                         newsContent += "\n\n";
 
                     // Fill content with our news
-                    newsContent += "- " + news[i].DisplayedDateStr + " -";
-                    newsContent += "\n<color=orange>" + news[i].title + "</color>";
-                    newsContent += "\n" + news[i].body;
+                    newsContent += "- " + news[i].Timestamp + " -";
+                    newsContent += "\n<color=orange>" + news[i].Title + "</color>";
+                    newsContent += "\n" + news[i].Body;
                 }
 
                 // Update view
