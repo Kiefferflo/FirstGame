@@ -15,8 +15,7 @@ public static class PlayfabAuth
     {
         get
         {
-            // TODO: Implement check that we are logged in
-            return false;
+            return PlayFabClientAPI.IsClientLoggedIn();
         }
     }
 
