@@ -83,7 +83,7 @@ public class PlayfabAuthPanelViewLogin : PlayfabAuthPanelView
     private void OnLoginSuccess(LoginResult result)
     {
         // Log
-        Debug.LogWarning("PlayfabAuthPanelViewLogin.OnLoginSuccess() - TODO");
+        Debug.LogWarning(result);
 
         // Hide auth panel
         if (this.PlayfabAuthPanel != null)
@@ -93,18 +93,14 @@ public class PlayfabAuthPanelViewLogin : PlayfabAuthPanelView
     private void OnLoginError(PlayFabError error)
     {
         // Log
-        Debug.LogWarning("PlayfabAuthPanelViewLogin.OnLoginError() - TODO");
+        Debug.LogWarning(error);
 
-        //// TODO: We could adapt here this code to determine wether the user is trying to connect with a non existing account
-        //bool accountNotFound = false;
-        //bool userNotFound = false;
-
-        //// If account not found or user not found, show registration page?
-        //if (accountNotFound == true || userNotFound == true)
-        //{
-        //    // Show registration view
-        //    if (this.PlayfabAuthPanel != null)
-        //        this.PlayfabAuthPanel.ShowRegistration();
-        //}
+        // If account not found or user not found, show registration page?
+        if (error.ErrorMessage.Contains("User not found"))
+        {
+           // Show registration view
+           if (this.PlayfabAuthPanel != null)
+               this.PlayfabAuthPanel.ShowRegistration();
+        }
     }
 }

@@ -63,7 +63,7 @@ public class PlayfabAuthPanelViewRegister : PlayfabAuthPanelView
     private void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
         // Log
-        Debug.LogWarning("PlayfabAuthPanelViewRegister.OnRegisterSuccess() - TODO");
+        Debug.LogWarning(result);
 
         // Show login view
         if (this.PlayfabAuthPanel != null)
@@ -73,6 +73,6 @@ public class PlayfabAuthPanelViewRegister : PlayfabAuthPanelView
     private void OnRegisterError(PlayFabError error)
     {
         // Log
-        Debug.LogError("PlayfabAuthPanelViewRegister.OnRegisterError() - Error: TODO");
+        Debug.LogError(error);
     }
 }
